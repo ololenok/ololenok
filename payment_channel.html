@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Платёжный канал</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 15px;
+            background: #fafafa;
+        }
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        .channel-container {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .data-line {
+            margin-bottom: 10px;
+        }
+        .btn {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn:hover {
+            background: #0069d9;
+        }
+        .field {
+            margin-bottom: 10px;
+        }
+        input[type=text] {
+            width: 100%;
+            padding: 6px;
+            box-sizing: border-box;
+        }
+        a {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Платёжный канал</h1>
+    <div class="channel-container">
+        <!-- Сюда будем выводить полученные параметры -->
+        <div id="transactionInfo">
+            <p>Загрузка параметров транзакции...</p>
+        </div>
+        
+        <hr>
+        
+        <p>Имитируем ввод реквизитов:</p>
+        <div class="field">
+            <label>Номер карты:</label><br>
+            <input type="text" placeholder="1234 5678 9012 3456">
+        </div>
+        <div class="field">
+            <label>Срок (MM/YY):</label><br>
+            <input type="text" placeholder="01/24">
+        </div>
+        <div class="field">
+            <label>CVV:</label><br>
+            <input type="text" placeholder="123">
+        </div>
+        
+        <button class="btn">Оплатить</button>
+    </div>
+    
+    <p><a href="checkout.html">&larr; Назад на страницу кассы</a></p>
+
+    <script>
+    // Когда документ загрузился, извлекаем параметры из URL и отображаем
+    document.addEventListener('DOMContentLoaded', function() {
+        const params = new URLSearchParams(window.location.search);
+
+        // Извлекаем нужные параметры или ставим значения по умолчанию
+        const transactionId = params.get('transaction_id') || 'UNKNOWN';
+        const amount        = params.get('amount') || '0';
+        const description   = params.get('desc') || 'Без описания';
+        
+        const infoDiv = document.getElementById('transactionInfo');
+        infoDiv.innerHTML = `
+            <p><strong>ID транзакции:</strong> ${transactionId}</p>
+            <p><strong>Сумма:</strong> ${amount} ₽</p>
+            <p><strong>Описание:</strong> ${description}</p>
+        `;
+    });
+    </script>
+</body>
+</html>
